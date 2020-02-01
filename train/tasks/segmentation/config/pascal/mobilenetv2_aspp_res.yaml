@@ -10,7 +10,7 @@ train:
   min_momentum: 0.9      # sgd momentum min when lr is max
   final_decay: 0.99      # learning rate decay per epoch after initial cycle (from min lr)
   w_decay: 0.00004       # weight decay
-  batch_size:  5         # batch size
+  batch_size:  2         # batch size
   report_batch: 1        # every x batches, report loss
   report_epoch: 1        # every x epochs, report validation set
   save_summary: False    # Summary of weight histograms for tensorboard
@@ -19,8 +19,8 @@ train:
                          # in log folder
   avg_N: 3               # average the N best models
   crop_prop:
-    height: 512
-    width: 512
+    height: 256
+    width: 256
 
 # backbone parameters
 backbone:
@@ -51,7 +51,7 @@ head:
 # dataset (to find parser)
 dataset:
   name: "pascal"
-  location: "/cache/datasets/pascal/VOC2012/"
+  location: "/home/tobi/bonnetal/datasets/VOCdevkit/VOC2012"
   workers: 5  # number of threads to get data
   img_means: #rgb
     - 0.45223407
