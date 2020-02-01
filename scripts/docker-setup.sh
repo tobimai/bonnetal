@@ -1,6 +1,6 @@
 sudo apt install docker docker.io
 cd ../docker
-./install-nvidia-docker.sh
+sudo ./install-nvidia-docker.sh
 cd ..
-nvidia-docker build -t tano297/bonnetal:runtime -f docker/runtime/Dockerfile .
+sudo nvidia-docker build -t tano297/bonnetal:runtime -f docker/runtime/Dockerfile .
 
