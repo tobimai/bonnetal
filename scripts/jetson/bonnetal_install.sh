@@ -24,7 +24,7 @@ sudo cp -r torch/share/* /usr/local/share
 
 echo "finished building PyTorch, building bonnetal now"
 
-cd ../bonnetal/deploy
+cd ../../deploy
 git clone https://github.com/ros/catkin.git src/catkin
 CMAKE_PREFIX_PATH=""
 catkin init
