@@ -4,7 +4,7 @@ sudo pip install catkin_tools trollius
 echo "Installing Pytorch now, this could take a while"
 sleep 3
 
-sudo swapoff /swapfile
+sudo swapoff -a
 sudo dd if=/dev/zero of=/swapfile bs=1M count=8192 oflag=append conv=notrunc
 sudo mkswap /swapfile
 sudo swapon /swapfile
