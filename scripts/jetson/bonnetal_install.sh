@@ -29,7 +29,9 @@ sudo cp -r torch/share/* /usr/local/share
 echo "finished building PyTorch, building bonnetal now"
 
 cd ../../deploy
-git clone https://github.com/ros/catkin.git src/catkin
-CMAKE_PREFIX_PATH=""
+#git clone https://github.com/ros/catkin.git src/catkin
+#CMAKE_PREFIX_PATH=""
+sudo cp -r /usr/include/opencv4 /usr/include/opencv
 catkin init
 catkin build bonnetal_segmentation_standalone bonnetal_segmentation_ros
+source devel/setup.bash
