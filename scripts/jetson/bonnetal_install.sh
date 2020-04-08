@@ -20,7 +20,7 @@ cd pytorch
 export USE_NCCL=0
 export USE_DISTRIBUTED=0
 export TORCH_CUDA_ARCH_LIST="5.3;6.2;7.2"
-export MAX_JOBS=3
+export MAX_JOBS=4
 sudo -E python3 setup.py install
 sudo cp -r torch/include/* /usr/local/include
 sudo cp -r torch/lib/* /usr/local/lib
@@ -29,7 +29,7 @@ sudo cp -r torch/share/* /usr/local/share
 echo "finished building PyTorch, building bonnetal now"
 
 cd ../../../deploy
-source ~/.bashrc
+source /home/tobi/.bashrc
 #git clone https://github.com/ros/catkin.git src/catkin
 #CMAKE_PREFIX_PATH=""
 sudo cp -r /usr/include/opencv4 /usr/include/opencv
