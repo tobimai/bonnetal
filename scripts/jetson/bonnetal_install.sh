@@ -28,7 +28,8 @@ sudo cp -r torch/share/* /usr/local/share
 
 echo "finished building PyTorch, building bonnetal now"
 
-cd ../../deploy
+cd ../../../deploy
+source ~/.bashrc
 #git clone https://github.com/ros/catkin.git src/catkin
 #CMAKE_PREFIX_PATH=""
 sudo cp -r /usr/include/opencv4 /usr/include/opencv
