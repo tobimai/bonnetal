@@ -6,8 +6,6 @@ MAINTAINER Andres Milioto <amilioto@uni-bonn.de>
 
 CMD ["bash"]
 
-ENV BUILD_TEST 0
-
 # ENVIRONMENT STUFF FOR CUDA
 RUN ls /usr/local/cuda/bin
 ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:$LD_LIBRARY_PATH
@@ -27,10 +25,10 @@ RUN apt-get update && apt-get install -yqq  build-essential ninja-build \
   libxft-dev vim meld sudo ffmpeg python3-pip libboost-all-dev \
   libyaml-cpp-dev -y && updatedb
 
-
+RUN locate libcaffe2_gpu.so
 # python packages
-RUN pip3 install -U pip
-RUN pip3 install pyyaml
+#RUN pip3 install -U pip
+#RUN pip3 install pyyaml
 #  onnx==1.5.0 \
 #  torchvision==0.2.2.post3 \
 #  pycuda==2018.1.1 \
@@ -52,48 +50,40 @@ RUN pip3 install pyyaml
 
 #ENV MAX_JOBS 3
 # build pytorch from source and install in the system
+
 RUN git clone --recursive https://github.com/tano297/pytorch
+RUN ls
+RUN echo $PWD
 
-ADD libcaffe2_gpu.so lib/
-ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/bonnetal-docker-base/lib
+#ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/bonnetal-docker-base/pytorch
 
-
-
-
-ENV CONDA_INSTALL_LOCALLY 1
-RUN ls pytorch
-RUN ls pytorch/scripts
-RUN pytorch/scripts/build_anaconda.sh -DUSE_CUDA=ON
-
-
-RUN export USE_NCCL=0 && export USE_DISTRIBUTED=0 && export TORCH_CUDA_ARCH_LIST="5.3;6.2;7.2"  && cd pytorch && python3 setup.py install && cd ..
-
-RUN cd pytorch && \
-  cp -r torch/include/* /usr/local/include && \
-  cp -r torch/lib/* /usr/local/lib && \
-  cp -r torch/share/* /usr/local/share && \
-  cd .. && rm -r pytorch
+#RUN export USE_NCCL=0 && export USE_DISTRIBUTED=0 && export MAX_JOBS=3 && export TORCH_CUDA_ARCH_LIST="5.3;6.2;7.2"  && cd pytorch && python3 setup.py install && cd ..
+#RUN cd pytorch && \
+#  cp -r torch/include/* /usr/local/include && \
+#  cp -r torch/lib/* /usr/local/lib && \
+#  cp -r torch/share/* /usr/local/share && \
+#  cd .. && rm -r pytorch
 
 # install ros
-RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' && \
-  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 && \
-  apt update && \ 
-  DEBIAN_FRONTEND=noninteractive apt install -yqq ros-melodic-desktop-full && \
-  rosdep init && \
-  rosdep update
+#RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' && \
+#  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 && \
+#  apt update && \ 
+#  DEBIAN_FRONTEND=noninteractive apt install -yqq ros-melodic-desktop-full && \
+#  rosdep init && \
+#  rosdep update
 
 # install catkin tools
-RUN apt-get install -y python-pip python-empy 
-RUN pip install -U pip catkin-tools trollius
+#RUN apt-get install -y python-pip python-empy 
+#RUN pip install -U pip catkin-tools trollius
 
 # recommended from nvidia to use the cuda devices
-ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
-ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
-ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+#ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
+#ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
+#ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
 # clean the cache
-RUN apt update && \
-  apt autoremove --purge -y && \
-  apt clean -y
+#RUN apt update && \
+#  apt autoremove --purge -y && \
+#  apt clean -y
 
 RUN rm -rf /var/lib/apt/lists/*
