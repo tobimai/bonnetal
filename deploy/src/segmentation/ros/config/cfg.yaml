@@ -4,7 +4,7 @@
 #
 
 # CNN stuff
-model_path: "/home/tobi/saved"
+model_path: "/model/"
 verbose: true
 backend: "pytorch" # tf (pytorch, cpu or gpu mode) or tensorrt (TensorRT nvidia gpu)
 
